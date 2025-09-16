@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 1: Unity in Diversity - Reading & Exercises</title>
+    <style>
+        /* --- New Color Palette & General Styling --- */
+        :root {
+            --purple: #6f42c1;
+            --teal: #20c997;
+            --light-blue-bg: #f0f8ff; /* AliceBlue */
+            --light-gray-bg: #f8f9fa;
+            --border-color: #dee2e6;
+            --text-color: #212529;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-blue-bg);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .main-container {
+            max-width: 950px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1, h2, h3 { color: #343a40; }
+        h1 { border-bottom: 2px solid var(--purple); padding-bottom: 15px; margin-bottom: 20px; text-align: center; }
+        h2 { border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-top: 40px; }
+        hr { border: 0; height: 1px; background: var(--border-color); margin: 40px 0; }
+
+        /* --- Tab Interface Styling --- */
+        .tab-nav {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 25px;
+        }
+        .tab-button {
+            padding: 15px 25px;
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #6c757d;
+            border-bottom: 3px solid transparent;
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .tab-button:hover {
+            color: var(--purple);
+        }
+        .tab-button.active {
+            color: var(--purple);
+            border-bottom-color: var(--purple);
+            font-weight: 600;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* --- Styles from Reading Text Page (index.html) --- */
+        .clickable-word {
+            font-weight: bold; color: var(--teal); cursor: pointer; text-decoration: none; border-bottom: 2px dotted var(--teal);
+            transition: color 0.2s, border-bottom-color 0.2s;
+        }
+        .clickable-word:hover { color: #17a2b8; border-bottom-color: #17a2b8; }
+        .modal-backdrop { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(3px); }
+        .modal { display: none; position: fixed; z-index: 1001; left: 50%; top: 50%; transform: translate(-50%, -50%); background-color: #fff; border-radius: 8px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); width: 90%; max-width: 600px; max-height: 80vh; overflow: hidden; flex-direction: column; }
+        .modal-header { padding: 15px 20px; border-bottom: 1px solid #dee2e6; background-color: #f1f3f5; display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h2 { margin: 0; font-size: 1.5em; color: #343a40; border: none; }
+        .modal-close { color: #6c757d; font-size: 2em; font-weight: bold; cursor: pointer; line-height: 1; }
+        .modal-content { padding: 20px; overflow-y: auto; }
+        .modal-content h3 { color: var(--purple); margin-top: 1.2em; margin-bottom: 0.5em; font-size: 1.1em; text-transform: uppercase; }
+        .modal-content li { background-color: #f8f9fa; border-left: 3px solid var(--teal); padding: 8px 12px; margin-bottom: 5px; border-radius: 0 4px 4px 0; }
+        
+        /* --- Styles from Workbook Page (indexworkbook.html) --- */
+        button#reset-btn { background-color: #6c757d; padding: 12px 25px; font-size: 16px; font-weight: bold; cursor: pointer; border: none; border-radius: 8px; color: #fff; transition: background-color 0.2s, transform 0.2s; }
+        button#reset-btn:hover { background-color: #5a6268; transform: translateY(-2px); }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+        .shake { animation: shake 0.4s ease-in-out; }
+        .drag-container { display: flex; flex-wrap: wrap; gap: 10px; padding: 15px; background-color: var(--light-gray-bg); border: 1px dashed var(--border-color); border-radius: 8px; margin-bottom: 20px; min-height: 40px; }
+        .draggable { padding: 8px 15px; background-color: #fff; border: 1px solid var(--border-color); border-radius: 20px; cursor: grab; user-select: none; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .draggable.dragging { opacity: 0.5; }
+        .draggable[draggable="false"] { cursor: default; background-color: #e9ecef; }
+        .drop-zone { padding: 10px; border: 2px dashed var(--border-color); border-radius: 8px; transition: all 0.2s; min-height: 40px; }
+        .drop-zone.hovered { background-color: #e6f7ff; border-color: var(--teal); }
+        .matching-area { display: grid; grid-template-columns: 1fr 2fr; gap: 15px; align-items: center; }
+        .matching-area .term { font-weight: bold; }
+        .categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .category h3 { color: var(--purple); margin-top: 0; font-size: 1.1em; }
+        .category .drop-zone { display: flex; flex-wrap: wrap; gap: 8px; }
+        .sentence-list li { list-style-type: none; padding: 8px 0; display: flex; align-items: center; }
+        .sentence-list { padding-left: 0; }
+        select { padding: 5px; margin: 0 5px; border: 2px solid var(--border-color); border-radius: 5px; font-size: 1em; transition: border-color 0.3s; }
+        .feedback-icon { font-size: 1.2em; margin-left: 10px; }
+        .correct { border-color: var(--success-color) !important; }
+        .incorrect { border-color: var(--danger-color) !important; }
+        .draggable.correct { color: #155724; border-color: var(--success-color); background-color: #f0fff4 !important; }
+        .draggable.incorrect { color: #721c24; border-color: var(--danger-color); background-color: #fff5f5 !important; }
+        
+        /* --- Multiple Choice Quiz Styling --- */
+        .quiz-container ol { padding-left: 20px; }
+        .quiz-container li { margin-bottom: 25px; }
+        .quiz-option { margin-bottom: 8px; display: flex; align-items: center; }
+        .quiz-option label { margin-left: 8px; cursor: pointer; }
+        .quiz-feedback { margin-left: 10px; font-weight: bold; }
+        .quiz-feedback.correct { color: var(--success-color); }
+        .quiz-feedback.incorrect { color: var(--danger-color); }
+        input[type="radio"]:disabled + label { color: #6c757d; }
+
+        /* --- Footer Styling --- */
+        footer { text-align: center; margin-top: 40px; padding: 20px; font-size: 0.9em; color: #6c757d; border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <h1>Unit 1: Unity in Diversity</h1>
+
+        <nav class="tab-nav">
+            <button class="tab-button active" data-tab="reading">Reading Text</button>
+            <button class="tab-button" data-tab="exercises">Interactive Exercises</button>
+        </nav>
+
+        <div id="reading" class="tab-content active">
+            <h2>THE WAY WE LOOK</h2>
+            <p>Have you ever thought about why we look the way we do? What makes some people’s hair curly and others’ straight? Why is some people’s skin dark and others’ light? These are some of the questions we asked Ms. Susan Franz, an anthropologist, who talked to us about people and their characteristics.</p>
+            <h3>The Interview</h3>
+            <p><strong>Interviewer:</strong> Ms. Franz, why do people around the world look so different?</p>
+            <p><strong>Ms. Franz:</strong> Well, think about the countries we live in. They differ greatly in <span class="clickable-word" data-word="terrain">terrain</span>, temperature, <span class="clickable-word" data-word="altitude">altitude</span> and <span class="clickable-word" data-word="vegetation">vegetation</span>. Yet, people have managed to make homes almost everywhere: <span class="clickable-word" data-word="barren">barren</span>, rocky mountain tops, icy, freezing plains, wet marshes, <span class="clickable-word" data-word="scorching">scorching</span> deserts. The people living in these different places have slowly become very different from each other. Their skin colour, the shape and size of their bodies and their characteristics have <span class="clickable-word" data-word="evolved">evolved</span> over the years to suit their surroundings.</p>
+            <p><strong>Interviewer:</strong> Can you give us some examples?</p>
+            <p><strong>Ms. Franz:</strong> Of course. A good example is skin colour. Scientists think that dark skins – which are rich in a <span class="clickable-word" data-word="substance">substance</span> called melanin – offer good protection against the burning rays of the sun. Very dark, <span class="clickable-word" data-word="curly">curly</span> hair also offers good insulation from the sun and heat. In northern countries, where the rays of the sun are weaker, people don’t need dark skin. Their <span class="clickable-word" data-word="pale">pale</span> <span class="clickable-word" data-word="complexion">complexion</span> allows the skin to absorb the sun’s rays easily in order to make vitamin D.</p>
+            <p><strong>Interviewer:</strong> Facial characteristics are also very different. Why?</p>
+            <p><strong>Ms. Franz:</strong> Well, the key word here again is ‘<span class="clickable-word" data-word="adaptation">adaptation</span>’. In extremely cold weather, ears and noses are often the first parts of the body to suffer from frostbite. That’s why people who live in very cold temperatures have facial characteristics that help them survive the <span class="clickable-word" data-word="harsh">harsh</span> weather. Their faces are flat, and their noses are also small and flat. They also have an extra layer of fat in their <span class="clickable-word" data-word="eyelids">eyelids</span> which gives them <span class="clickable-word" data-word="slanted">slanted</span> eyes.</p>
+            <p><strong>Interviewer:</strong> That’s very interesting! What about body size and height?</p>
+            <p><strong>Ms. Franz:</strong> Well, again scientists have found that people who live in hot, dry climates are often tall and thin. This lean type of body helps heat escape more quickly. People from cold <span class="clickable-word" data-word="regions">regions</span>, on the other hand, tend to have more <span class="clickable-word" data-word="sturdy">sturdy</span> bodies, covered by a layer of protective fat.</p>
+            <p><strong>Interviewer:</strong> So, if we move to a northern country, will our skin become pale?</p>
+            <p><strong>Ms. Franz:</strong> Of course not! People’s bodies have slowly changed over thousands of years. Who knows what we will look like ten thousand years from now!...</p>
+            
+            <hr>
+
+            <div class="quiz-container">
+                <h2>Check Your Understanding</h2>
+                <ol>
+                    <li>
+                        What is the main theme of the interview with Ms. Franz?
+                        <div class="quiz-option"><input type="radio" name="q1" value="a"><label for="q1a">The history of human migration</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q1" value="b" data-correct="true"><label for="q1b">How humans have adapted to different environments</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q1" value="c"><label for="q1c">The cultural differences between people</label><span class="quiz-feedback"></span></div>
+                    </li>
+                    <li>
+                        What is the function of melanin in the skin?
+                        <div class="quiz-option"><input type="radio" name="q2" value="a"><label for="q2a">To help absorb vitamin D</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q2" value="b"><label for="q2b">To keep the skin pale</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q2" value="c" data-correct="true"><label for="q2c">To protect against the sun's burning rays</label><span class="quiz-feedback"></span></div>
+                    </li>
+                    <li>
+                        Why do people in very cold climates often have flat faces and small noses?
+                        <div class="quiz-option"><input type="radio" name="q3" value="a" data-correct="true"><label for="q3a">To help prevent frostbite</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q3" value="b"><label for="q3b">To make them better hunters</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q3" value="c"><label for="q3c">It is a random genetic trait</label><span class="quiz-feedback"></span></div>
+                    </li>
+                    <li>
+                        What body type is common for people living in hot, dry climates?
+                        <div class="quiz-option"><input type="radio" name="q4" value="a"><label for="q4a">Short and sturdy</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q4" value="b" data-correct="true"><label for="q4b">Tall and thin</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q4" value="c"><label for="q4c">Muscular and heavy</label><span class="quiz-feedback"></span></div>
+                    </li>
+                    <li>
+                        According to the text, what gives some people slanted eyes?
+                        <div class="quiz-option"><input type="radio" name="q5" value="a" data-correct="true"><label for="q5a">An extra layer of fat in their eyelids</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q5" value="b"><label for="q5b">The shape of their skull</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q5" value="c"><label for="q5c">The high altitude where they live</label><span class="quiz-feedback"></span></div>
+                    </li>
+                    <li>
+                        What advantage does pale skin offer in northern countries?
+                        <div class="quiz-option"><input type="radio" name="q6" value="a"><label for="q6a">It provides better insulation against the cold</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q6" value="b"><label for="q6b">It is less prone to sunburn</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q6" value="c" data-correct="true"><label for="q6c">It absorbs the sun's rays easily to make vitamin D</label><span class="quiz-feedback"></span></div>
+                    </li>
+                    <li>
+                       How quickly do these adaptations happen?
+                        <div class="quiz-option"><input type="radio" name="q7" value="a"><label for="q7a">Within a person's lifetime</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q7" value="b" data-correct="true"><label for="q7b">Slowly, over thousands of years</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q7" value="c"><label for="q7c">Instantly, when moving to a new place</label><span class="quiz-feedback"></span></div>
+                    </li>
+                    <li>
+                        Which word does Ms. Franz use as the "key word" for why people look different?
+                        <div class="quiz-option"><input type="radio" name="q8" value="a"><label for="q8a">Vegetation</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q8" value="b"><label for="q8b">Melanin</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q8" value="c" data-correct="true"><label for="q8c">Adaptation</label><span class="quiz-feedback"></span></div>
+                    </li>
+                    <li>
+                        Besides protection, what does dark, curly hair offer?
+                        <div class="quiz-option"><input type="radio" name="q9" value="a" data-correct="true"><label for="q9a">Insulation from the sun and heat</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q9" value="b"><label for="q9b">A way to absorb more vitamin D</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q9" value="c"><label for="q9c">Protection from the cold</label><span class="quiz-feedback"></span></div>
+                    </li>
+                    <li>
+                        Why is a tall, thin body type advantageous in hot climates?
+                        <div class="quiz-option"><input type="radio" name="q10" value="a"><label for="q10a">It provides more protection from the sun</slabel><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q10" value="b"><label for="q10b">It is better for running long distances</label><span class="quiz-feedback"></span></div>
+                        <div class="quiz-option"><input type="radio" name="q10" value="c" data-correct="true"><label for="q10c">It helps heat escape from the body more quickly</label><span class="quiz-feedback"></span></div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div id="exercises" class="tab-content">
+            <h2>Exercise 1.1: Match the Words with Their Meanings</h2>
+            <p>Drag the words from the box and drop them next to their correct meaning.</p>
+            <div id="source-words-1" class="drag-container"></div>
+            <div class="matching-area">
+                <div class="drop-zone" data-match-id="g"></div><div class="term">a. develop gradually and naturally</div>
+                <div class="drop-zone" data-match-id="a"></div><div class="term">b. the use of materials to prevent loss of heat</div>
+                <div class="drop-zone" data-match-id="e"></div><div class="term">c. take in heat, light, etc.</div>
+                <div class="drop-zone" data-match-id="b"></div><div class="term">d. area</div>
+                <div class="drop-zone" data-match-id="c"></div><div class="term">e. everything around a place</div>
+                <div class="drop-zone" data-match-id="f"></div><div class="term">f. height above sea level</div>
+                <div class="drop-zone" data-match-id="d"></div><div class="term">g. the process of becoming suitable for a new situation</div>
+            </div>
+            <hr>
+            <h2>Exercise 1.2: Complete the Sentences</h2>
+            <p>Choose the correct word from the dropdown list to complete each sentence.</p>
+            <ul class="sentence-list">
+                <li>1. Dry sand can <select class="dropdown-q" data-answer="absorb"><option value="">-- select --</option><option value="adaptation">adaptation</option><option value="altitude">altitude</option><option value="surroundings">surroundings</option><option value="evolve">evolve</option><option value="insulation">insulation</option><option value="absorb">absorb</option><option value="region">region</option></select> water. <span class="feedback-icon"></span></li>
+                <li>2. Evolution occurs as a result of <select class="dropdown-q" data-answer="adaptation"><option value="">-- select --</option><option value="adaptation">adaptation</option><option value="altitude">altitude</option><option value="surroundings">surroundings</option><option value="evolve">evolve</option><option value="insulation">insulation</option><option value="absorb">absorb</option><option value="region">region</option></select> to new environments. <span class="feedback-icon"></span></li>
+                <li>3. It's important that buildings should fit in with their <select class="dropdown-q" data-answer="surroundings"><option value="">-- select --</option><option value="adaptation">adaptation</option><option value="altitude">altitude</option><option value="surroundings">surroundings</option><option value="evolve">evolve</option><option value="insulation">insulation</option><option value="absorb">absorb</option><option value="region">region</option></select>. <span class="feedback-icon"></span></li>
+                <li>4. We are now flying at an <select class="dropdown-q" data-answer="altitude"><option value="">-- select --</option><option value="adaptation">adaptation</option><option value="altitude">altitude</option><option value="surroundings">surroundings</option><option value="evolve">evolve</option><option value="insulation">insulation</option><option value="absorb">absorb</option><option value="region">region</option></select> of 10,000 metres. <span class="feedback-icon"></span></li>
+                <li>5. Plants and animals <select class="dropdown-q" data-answer="evolve"><option value="">-- select --</option><option value="adaptation">adaptation</option><option value="altitude">altitude</option><option value="surroundings">surroundings</option><option value="evolve">evolve</option><option value="insulation">insulation</option><option value="absorb">absorb</option><option value="region">region</option></select> over millions of years to suit their environment. <span class="feedback-icon"></span></li>
+                <li>6. Animals' thick fur provides very good <select class="dropdown-q" data-answer="insulation"><option value="">-- select --</option><option value="adaptation">adaptation</option><option value="altitude">altitude</option><option value="surroundings">surroundings</option><option value="evolve">evolve</option><option value="insulation">insulation</option><option value="absorb">absorb</option><option value="region">region</option></select> against the arctic cold. <span class="feedback-icon"></span></li>
+            </ul>
+            <hr>
+            <h2>Exercise 1.3: Categorize the Words</h2>
+            <p>Drag the words from the box and drop them into the correct category.</p>
+            <div id="source-words-2" class="drag-container"></div>
+            <div class="categories">
+                <div class="category"><h3>Age</h3><div class="drop-zone" data-category-id="age"></div></div>
+                <div class="category"><h3>Body</h3><div class="drop-zone" data-category-id="body"></div></div>
+                <div class="category"><h3>Hair</h3><div class="drop-zone" data-category-id="hair"></div></div>
+                <div class="category"><h3>Face</h3><div class="drop-zone" data-category-id="face"></div></div>
+                <div class="category"><h3>Skin</h3><div class="drop-zone" data-category-id="skin"></div></div>
+                <div class="category"><h3>Nose</h3><div class="drop-zone" data-category-id="nose"></div></div>
+                <div class="category"><h3>Mouth</h3><div class="drop-zone" data-category-id="mouth"></div></div>
+                <div class="category"><h3>Eyes</h3><div class="drop-zone" data-category-id="eyes"></div></div>
+            </div>
+            <div class="button-container">
+                <button id="reset-btn">Reset All Exercises</button>
+            </div>
+        </div>
+
+    </div><div id="modal-backdrop" class="modal-backdrop"></div>
+    <div id="info-modal" class="modal">
+        <div class="modal-header"><h2 id="modal-title"></h2><span id="modal-close" class="modal-close">&times;</span></div>
+        <div id="modal-content" class="modal-content"></div>
+    </div>
+
+    <footer>
+        ✨✍️ Created by Panagiotis Domvros, English and Drama Teacher, All Rights Reserved ✍️✨
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- TAB SWITCHING LOGIC ---
+            const tabs = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(item => item.classList.remove('active'));
+                    tabContents.forEach(item => item.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // --- READING TEXT MODAL LOGIC ---
+            const wordData = {
+                terrain: { title: "Terrain", definition: "The physical features of an area of land.", derivatives: ["All-terrain (adjective): Designed to be used on any type of ground."], collocations: ["<b>Adjectives:</b> difficult, rough, rugged, rocky, mountainous, hilly, flat, varied.", "<b>Verbs:</b> cross, cover, navigate, survey."], wordFamily: ["<b>Territory:</b> An area of land under the jurisdiction of a ruler or state.", "<b>Terrestrial:</b> Relating to the Earth or to land.", "<b>Subterranean:</b> Existing or occurring under the earth's surface."] },
+                altitude: { title: "Altitude", definition: "The height of an object or point in relation to sea level or ground level.", derivatives: ["<b>Altitudinal</b> (adjective): Relating to altitude."], antonyms: ["depth", "lowness"], collocations: ["<b>Adjectives:</b> high, low, maximum, cruising.", "<b>Verbs:</b> gain, lose, reach, maintain, fly at an."], wordFamily: ["<b>Exalt:</b> To hold someone or something in very high regard."] },
+                vegetation: { title: "Vegetation", definition: "Plants found in a particular area or habitat.", derivatives: ["<b>Vegetate</b> (verb): To live in a dull, inactive way.", "<b>Vegetative</b> (adjective): Relating to vegetation or plant life."], collocations: ["<b>Adjectives:</b> lush, dense, sparse, natural, native, tropical.", "<b>Verbs:</b> clear, grow, support, destroy."] },
+                barren: { title: "Barren", definition: "(Of land) too poor to produce much or any vegetation; bleak and lifeless.", derivatives: ["<b>Barrenness</b> (noun): The state of being unproductive or unfruitful."], antonyms: ["fertile", "fruitful", "productive", "lush"], collocations: ["barren land", "barren landscape", "barren wasteland", "barren rock."] },
+                scorching: { title: "Scorching", definition: "Very hot.", derivatives: ["<b>Scorch</b> (verb): To burn the surface of something.", "<b>Scorcher</b> (noun): An extremely hot day."], antonyms: ["freezing", "cold", "icy", "chilly"], collocations: ["scorching heat", "scorching sun", "scorching temperatures."] },
+                evolved: { title: "Evolved", definition: "Developed gradually from a simple to a more complex form.", derivatives: ["<b>Evolve</b> (verb): The base form.", "<b>Evolution</b> (noun): The process of gradual development.", "<b>Evolutionary</b> (adjective): Relating to the process of evolution."], antonyms: ["regressed", "degenerated", "devolved"], collocations: ["<b>Adverbs:</b> slowly, gradually, rapidly.", "<b>Prepositions:</b> evolved from, evolved into."], wordFamily: ["<b>Involve:</b> To include something as a necessary part.", "<b>Revolve:</b> To move in a circle on a central axis."] },
+                substance: { title: "Substance", definition: "A particular kind of matter with uniform properties.", derivatives: ["<b>Substantial</b> (adjective): Of considerable importance or size.", "<b>Substantiate</b> (verb): To provide evidence to prove the truth of something."], antonyms: ["formlessness", "nothingness"], collocations: ["<b>Adjectives:</b> chemical, illegal, dangerous, natural, sticky.", "<b>Verbs:</b> contain, lack, test a."] },
+                curly: { title: "Curly", definition: "Made, growing, or arranged in curls or curves.", derivatives: ["<b>Curl</b> (noun/verb): A curved piece of hair; to form into a curl.", "<b>Curliness</b> (noun): The state of being curly."], antonyms: ["straight"], collocations: ["naturally curly", "tightly curly", "curly hair", "curly fries."] },
+                pale: { title: "Pale", definition: "Light in color or shade; containing little color.", derivatives: ["<b>Paleness</b> (noun): The quality of being light in color."], antonyms: ["dark", "vibrant", "ruddy", "flushed"], collocations: ["<b>Verbs:</b> turn pale, go pale.", "<b>Nouns:</b> pale skin, pale complexion, pale imitation."], wordFamily: ["<b>Pallid:</b> Pale, typically because of poor health.", "<b>Appall:</b> To greatly dismay or horrify."] },
+                complexion: { title: "Complexion", definition: "The natural color, texture, and appearance of a person's skin, especially on the face.", derivatives: ["<b>Complexioned</b> (adjective): Used in compounds (e.g., fair-complexioned)."], collocations: ["<b>Adjectives:</b> clear, fair, dark, pale, ruddy, sallow, healthy, glowing, flawless.", "<b>Verbs:</b> improve, ruin."] },
+                adaptation: { title: "Adaptation", definition: "The process of changing to become better suited to an environment.", derivatives: ["<b>Adapt</b> (verb): To become adjusted to new conditions.", "<b>Adaptable</b> (adjective): Able to adjust.", "<b>Adaptive</b> (adjective): Characterized by adaptation."], antonyms: ["maladaptation", "rigidity", "inflexibility"], collocations: ["<b>Adjectives:</b> successful, rapid, gradual, evolutionary, cultural.", "<b>Nouns:</b> adaptation process, adaptation strategy."], wordFamily: ["<b>Adept:</b> Very skilled at something.", "<b>Aptitude:</b> A natural ability to do something."] },
+                harsh: { title: "Harsh", definition: "Unpleasantly rough, cruel, or severe.", derivatives: ["<b>Harshly</b> (adverb): In a severe manner.", "<b>Harshness</b> (noun): The quality of being harsh."], antonyms: ["mild", "gentle", "soft", "pleasant", "lenient"], collocations: ["harsh conditions", "harsh winter", "harsh reality", "harsh criticism", "harsh chemicals", "harsh lighting."] },
+                eyelids: { title: "Eyelids", definition: "The pieces of skin above and below the eye that cover it when you close it.", collocations: ["<b>Adjectives:</b> heavy, drooping, swollen, upper, lower.", "<b>Verbs:</b> close, open, lower, raise, flutter."] },
+                slanted: { title: "Slanted", definition: "Sloping or leaning in a particular direction; can also mean presenting information in a biased way.", derivatives: ["<b>Slant</b> (verb/noun): To slope; a sloping position or a particular point of view."], antonyms: ["level", "straight", "horizontal", "unbiased", "objective"], collocations: ["slanted eyes", "slanted roof", "slanted text", "slanted viewpoint."] },
+                regions: { title: "Regions", definition: "Areas of a country or the world having definable characteristics but not always fixed boundaries.", derivatives: ["<b>Regional</b> (adjective): Relating to a region.", "<b>Regionally</b> (adverb): In a regional manner."], collocations: ["<b>Adjectives:</b> mountainous, polar, tropical, remote, northern, coastal, rural."] },
+                sturdy: { title: "Sturdy", definition: "Strongly and solidly built or made.", derivatives: ["<b>Sturdily</b> (adverb): In a strong way.", "<b>Sturdiness</b> (noun): The quality of being strong and solid."], antonyms: ["weak", "flimsy", "fragile", "delicate", "unsteady"], collocations: ["sturdy construction", "sturdy boots", "sturdy build", "sturdy table", "sturdy resistance."] }
+            };
+            (function() {
+                const modal = document.getElementById('info-modal');
+                const backdrop = document.getElementById('modal-backdrop');
+                const modalTitle = document.getElementById('modal-title');
+                const modalContent = document.getElementById('modal-content');
+                const closeButton = document.getElementById('modal-close');
+                const clickableWords = document.querySelectorAll('.clickable-word');
+
+                function openModal(wordKey) {
+                    const data = wordData[wordKey]; if (!data) return;
+                    modalTitle.textContent = data.title;
+                    let contentHTML = `<p><strong>Definition:</strong> ${data.definition}</p>`;
+                    if (data.derivatives) { contentHTML += '<h3>Derivatives</h3><ul>'; data.derivatives.forEach(item => contentHTML += `<li>${item}</li>`); contentHTML += '</ul>'; }
+                    if (data.antonyms) { contentHTML += '<h3>Antonyms</h3><ul>'; data.antonyms.forEach(item => contentHTML += `<li>${item}</li>`); contentHTML += '</ul>'; }
+                    if (data.collocations) { contentHTML += '<h3>Collocations</h3><ul>'; data.collocations.forEach(item => contentHTML += `<li>${item}</li>`); contentHTML += '</ul>'; }
+                    if (data.wordFamily) { contentHTML += '<h3>Word Family</h3><ul>'; data.wordFamily.forEach(item => contentHTML += `<li>${item}</li>`); contentHTML += '</ul>'; }
+                    modalContent.innerHTML = contentHTML;
+                    modal.style.display = 'flex'; backdrop.style.display = 'block';
+                }
+                function closeModal() { modal.style.display = 'none'; backdrop.style.display = 'none'; }
+                clickableWords.forEach(word => word.addEventListener('click', e => openModal(e.target.getAttribute('data-word'))));
+                closeButton.addEventListener('click', closeModal);
+                backdrop.addEventListener('click', closeModal);
+                window.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.style.display === 'flex') closeModal(); });
+            })();
+
+
+            // --- MULTIPLE CHOICE QUIZ LOGIC ---
+            (function() {
+                const quizOptions = document.querySelectorAll('.quiz-option input[type="radio"]');
+                quizOptions.forEach(radio => {
+                    radio.addEventListener('change', (e) => {
+                        const currentQuestionName = e.target.name;
+                        const selectedOption = e.target;
+                        const allOptionsForQuestion = document.querySelectorAll(`input[name="${currentQuestionName}"]`);
+                        
+                        allOptionsForQuestion.forEach(option => {
+                           const feedbackSpan = option.nextElementSibling.nextElementSibling;
+                           feedbackSpan.textContent = ''; // Clear all feedback for the question first
+                        });
+                        
+                        const feedbackSpan = selectedOption.nextElementSibling.nextElementSibling;
+                        if (selectedOption.hasAttribute('data-correct')) {
+                            feedbackSpan.textContent = '✔️ Correct!';
+                            feedbackSpan.className = 'quiz-feedback correct';
+                            allOptionsForQuestion.forEach(opt => { if (opt !== selectedOption) opt.disabled = true; }); // Disable other options
+                        } else {
+                            feedbackSpan.textContent = '❌ Incorrect, try again.';
+                            feedbackSpan.className = 'quiz-feedback incorrect';
+                        }
+                    });
+                });
+            })();
+            
+            // --- WORKBOOK EXERCISES LOGIC ---
+            (function() {
+                const words1 = [ { id: 'word-1', text: 'adaptation', match: 'g' }, { id: 'word-2', text: 'altitude', match: 'f' }, { id: 'word-3', text: 'surroundings', match: 'e' }, { id: 'word-4', text: 'evolve', match: 'a' }, { id: 'word-5', text: 'insulation', match: 'b' }, { id: 'word-6', text: 'absorb', match: 'c' }, { id: 'word-7', text: 'region', match: 'd' } ];
+                const words2 = [ { id: 'cat-1', text: 'elderly', category: 'age' }, { id: 'cat-2', text: 'thin/thick eyebrows', category: 'eyes' }, { id: 'cat-3', text: 'wavy', category: 'hair' }, { id: 'cat-4', text: 'wears braces', category: 'mouth' }, { id: 'cat-5', text: 'adolescent', category: 'age' }, { id: 'cat-6', text: 'upturned', category: 'nose' }, { id: 'cat-7', text: 'plump', category: 'body' }, { id: 'cat-8', text: 'wrinkled', category: 'skin' }, { id: 'cat-9', text: 'slim', category: 'body' }, { id: 'cat-10', text: 'spiky', category: 'hair' }, { id: 'cat-11', text: 'square', category: 'face' }, { id: 'cat-12', text: 'crooked', category: 'mouth' }, { id: 'cat-13', text: 'tanned', category: 'skin' }, { id: 'cat-14', text: 'hazel', category: 'eyes' } ];
+                let draggedItem = null; const scrollSpeed = 15; const scrollZone = 80;
+                function handleDragScroll(e) { const y = e.clientY; if (y < scrollZone) { window.scrollBy(0, -scrollSpeed); } else if (y > window.innerHeight - scrollZone) { window.scrollBy(0, scrollSpeed); } }
+                function initializeDragAndDrop() {
+                    document.querySelectorAll('#exercises .draggable').forEach(draggable => {
+                        draggable.addEventListener('dragstart', (e) => { draggedItem = e.target; draggedItem.classList.add('dragging'); document.addEventListener('dragover', handleDragScroll); });
+                        draggable.addEventListener('dragend', () => { if (draggedItem) { draggedItem.classList.remove('dragging'); } document.removeEventListener('dragover', handleDragScroll); draggedItem = null; });
+                    });
+                    document.querySelectorAll('#exercises .drop-zone').forEach(zone => {
+                        zone.addEventListener('dragover', e => { e.preventDefault(); if (zone.dataset.locked !== 'true') { zone.classList.add('hovered'); } });
+                        zone.addEventListener('dragleave', () => zone.classList.remove('hovered'));
+                        zone.addEventListener('drop', handleDrop);
+                    });
+                }
+                function handleDrop(e) {
+                    e.preventDefault(); const zone = e.currentTarget; zone.classList.remove('hovered');
+                    if (!draggedItem || zone.dataset.locked === 'true') return;
+                    const s1 = document.getElementById('source-words-1'); const s2 = document.getElementById('source-words-2');
+                    if (zone.parentElement.classList.contains('matching-area')) { if (draggedItem.dataset.match === zone.dataset.matchId) { zone.appendChild(draggedItem); draggedItem.setAttribute('draggable', 'false'); draggedItem.classList.add('correct'); zone.dataset.locked = 'true'; zone.classList.add('correct'); } else { feedbackIncorrect(draggedItem, s1); } }
+                    else if (zone.parentElement.classList.contains('category')) { if (draggedItem.dataset.category === zone.dataset.categoryId) { zone.appendChild(draggedItem); draggedItem.setAttribute('draggable', 'false'); draggedItem.classList.add('correct'); } else { feedbackIncorrect(draggedItem, s2); } }
+                }
+                function feedbackIncorrect(item, sourceContainer) {
+                    item.classList.add('incorrect', 'shake');
+                    setTimeout(() => { item.classList.remove('incorrect', 'shake'); if (sourceContainer) sourceContainer.appendChild(item); }, 800);
+                }
+                document.querySelectorAll('#exercises .dropdown-q').forEach(select => {
+                    select.addEventListener('change', () => {
+                        const icon = select.nextElementSibling; if (select.value === "") { select.className = 'dropdown-q'; icon.textContent = ''; return; }
+                        if (select.value === select.dataset.answer) { select.classList.add('correct'); select.classList.remove('incorrect'); icon.textContent = '✔️'; icon.style.color = 'var(--success-color)'; select.disabled = true; } 
+                        else { select.classList.add('incorrect'); icon.textContent = '❌'; icon.style.color = 'var(--danger-color)'; setTimeout(() => { select.value = ""; select.classList.remove('incorrect'); icon.textContent = ''; }, 1000); }
+                    });
+                });
+                const resetButton = document.getElementById('reset-btn'); const sourceContainer1 = document.getElementById('source-words-1'); const sourceContainer2 = document.getElementById('source-words-2');
+                function createDraggable(word, type) { const div = document.createElement('div'); div.className = 'draggable'; div.draggable = true; div.id = word.id; div.textContent = word.text; if (type === 'match') div.dataset.match = word.match; else if (type === 'category') div.dataset.category = word.category; return div; }
+                function resetAllWorkbook() {
+                    sourceContainer1.innerHTML = ''; sourceContainer2.innerHTML = '';
+                    document.querySelectorAll('#exercises .drop-zone').forEach(zone => { zone.innerHTML = ''; zone.classList.remove('correct', 'incorrect'); delete zone.dataset.locked; });
+                    document.querySelectorAll('#exercises .dropdown-q').forEach(select => { select.value = ""; select.disabled = false; select.className = 'dropdown-q'; select.nextElementSibling.textContent = ''; });
+                    words1.forEach(word => sourceContainer1.appendChild(createDraggable(word, 'match')));
+                    words2.forEach(word => sourceContainer2.appendChild(createDraggable(word, 'category')));
+                    initializeDragAndDrop();
+                }
+                resetButton.addEventListener('click', resetAllWorkbook);
+                resetAllWorkbook();
+            })();
+        });
+    </script>
+</body>
+</html>
