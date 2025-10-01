@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unit 1: Unity in Diversity - Reading & Exercises</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* --- New Color Palette & General Styling --- */
         :root {
@@ -171,7 +172,6 @@
         #countries .container { display: flex; justify-content: space-around; gap: 20px; margin-bottom: 30px; flex-wrap: wrap; }
         #countries .column { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 100%; }
         
-        /* --- THIS IS THE FIX --- */
         @media (min-width: 768px) {
             #countries .column {
                 flex: 1 0 45%; /* More robust sizing for columns */
@@ -192,14 +192,249 @@
         #countries .row-header.active .icon { transform: rotate(45deg); }
         #countries .content-wrapper { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
 
+        /* --- STYLES FOR AMAZING STRUCTURES TAB --- */
+        #structures h1, #structures h2 {
+            color: #0056b3;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        #structures .container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        #structures .building-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap; 
+        }
+        #structures .building-section img {
+            max-width: 100%; 
+            height: auto;
+            width: 300px; 
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #structures .building-text {
+            flex: 1;
+            min-width: 300px; 
+        }
+        #structures .building-text p {
+            text-align: justify;
+        }
+        #structures table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        #structures th, #structures td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        #structures th {
+            background-color: #f2f2f2;
+        }
+        #structures .clickable-question {
+            cursor: pointer;
+            color: #0056b3;
+            font-weight: bold;
+        }
+        #structures .clickable-question:hover {
+            text-decoration: underline;
+        }
+        #structures td .answer {
+            display: none; 
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        #structures .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            font-weight: bold;
+            color: #007BFF;
+            text-decoration: underline dotted;
+        }
+        #structures .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 250px;
+            background-color: #555;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -125px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        #structures .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+        #structures .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        #structures .tooltip .tooltiptext strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #fff;
+            font-size: 1.1em;
+        }
+        #structures .tooltip .tooltiptext em {
+            font-style: italic;
+            color: #ccc;
+        }
+        #structures footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        
+        @media (max-width: 768px) {
+            #structures .building-section {
+                flex-direction: column;
+            }
+            #structures .building-section img {
+                width: 100%;
+                max-width: 400px;
+                align-self: center;
+            }
+        }
+
         /* --- Footer Styling --- */
         footer { text-align: center; margin-top: 40px; padding: 20px; font-size: 0.9em; color: #6c757d; border-top: 1px solid var(--border-color); }
+
+        /* --- Styles from activities.html --- */
+        #practice body {
+            font-family: 'Inter', sans-serif;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
+        }
+        #practice .correct {
+            border-color: #22c55e !important; /* green-500 */
+            background-color: #f0fdf4 !important; /* green-50 */
+        }
+        #practice .incorrect {
+            border-color: #ef4444 !important; /* red-500 */
+            background-color: #fef2f2 !important; /* red-50 */
+        }
+        #practice .feedback {
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        #practice .correct-feedback { color: #22c55e; }
+        #practice .incorrect-feedback { color: #ef4444; }
+        #practice .crossed-out { text-decoration: line-through; color: #ef4444; }
+
+        /* Tap-to-Place Styles */
+        #practice .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            padding: 1rem;
+            background-color: #f3f4f6; /* gray-100 */
+            border-radius: 0.5rem;
+        }
+        #practice .tappable-item {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border: 2px solid #d1d5db; /* gray-300 */
+            border-radius: 0.375rem;
+            background-color: white;
+            transition: all 0.2s ease-in-out;
+            font-weight: 500;
+        }
+        #practice .tappable-item:hover {
+            border-color: #3b82f6; /* blue-500 */
+            color: #3b82f6;
+        }
+        #practice .tappable-item.selected {
+            border-color: #3b82f6; /* blue-500 */
+            background-color: #dbeafe; /* blue-100 */
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        #practice .drop-target {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 52px;
+            min-width: 120px;
+            padding: 0.25rem;
+            border: 2px dashed #9ca3af; /* gray-400 */
+            border-radius: 0.375rem;
+            background-color: #f9fafb; /* gray-50 */
+            transition: background-color 0.2s;
+            vertical-align: middle;
+        }
+        #practice .drop-target.over {
+             background-color: #dbeafe; /* blue-100 */
+        }
+
+        /* Image Tap Styles */
+        #practice .image-bank {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+            background-color: #f3f4f6;
+            border-radius: 0.5rem;
+        }
+        #practice .image-card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            text-align: center;
+            background-color: #fff;
+            border: 2px solid #d1d5db;
+        }
+        #practice .image-card img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+        }
+        #practice .image-card span {
+            display: block;
+            padding: 0.5rem;
+            font-weight: 500;
+        }
+        #practice .drop-target .image-card {
+            padding: 0.5rem 1rem;
+            height: auto;
+        }
+        #practice .drop-target .image-card img {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
     <div class="main-container">
-        <h1>Unit 1: Unity in Diversity</h1>
+        <h1><strong>Unit 1: Unity in Diversity</strong></h1>
 
         <nav class="tab-nav">
             <button class="tab-button active" data-tab="reading">The way we look</button>
@@ -207,6 +442,8 @@
             <a href="https://englished.github.io/descriptions-person-b12/" target="_blank" class="tab-button">Writing</a>
             <button class="tab-button" data-tab="listening">Welcome to my world</button>
             <button class="tab-button" data-tab="countries">A glimpse into my country</button>
+            <button class="tab-button" data-tab="structures">Amazing Structures</button>
+            <button class="tab-button" data-tab="practice">Practice</button>
         </nav>
 
         <div id="reading" class="tab-content active">
@@ -601,6 +838,268 @@
             </table>
         </div>
 
+        <div id="structures" class="tab-content">
+            <div class="container">
+                <h1>Amazing Structures</h1>
+                <p>The texts below come from an article about <span class="tooltip">remarkable<span class="tooltiptext"><strong>Remarkable (adj.):</strong> unusual or special and therefore surprising and worth mentioning.<em><br>Example: The view from the top of the mountain was remarkable.</em></span></span> buildings. Read them and complete the table.</p>
+        
+                <hr>
+        
+                <h2>Agia Sophia</h2>
+                <div class="building-section">
+                    <img src="a.png" alt="An aerial view of the Hagia Sophia in Istanbul.">
+                    <div class="building-text">
+                        <p>The "Church of Holy Wisdom", also called Agia Sophia, is in Constantinople - now Istanbul. It was built by the <span class="tooltip">emperor<span class="tooltiptext"><strong>Emperor (n.):</strong> the ruler of an empire.<em><br>Example: The Roman emperor lived in a large palace.</em></span></span> Justinian after the <span class="tooltip">riots<span class="tooltiptext"><strong>Riots (n.):</strong> a situation where a large group of people behave in a violent and uncontrolled way.<em><br>Example: The city experienced riots after the controversial decision.</em></span></span> of AD 532. Anthemios and Isidoros were two of the Greek <span class="tooltip">architects<span class="tooltiptext"><strong>Architects (n.):</strong> people who design buildings.<em><br>Example: The architect showed us the plans for our new house.</em></span></span> who designed it. It took six years to build and about ten thousand men worked on it. The first stone of the <span class="tooltip">foundations<span class="tooltiptext"><strong>Foundations (n.):</strong> the structures below the ground that support a building.<em><br>Example: A strong foundation is necessary for a tall building.</em></span></span> was laid by the emperor himself.</p>
+                        <p>The building had brick walls, marble <span class="tooltip">linings<span class="tooltiptext"><strong>Linings (n.):</strong> a layer of material covering the inside surface of something.<em><br>Example: The jacket has a warm, soft lining.</em></span></span> inside, amazing <span class="tooltip">mosaics<span class="tooltiptext"><strong>Mosaics (n.):</strong> pictures made by arranging together small colored pieces of stone, tile, or glass.<em><br>Example: We saw beautiful ancient mosaics in the museum.</em></span></span> made up of tiny <span class="tooltip">cubes<span class="tooltiptext"><strong>Cubes (n.):</strong> solid objects with six square sides of equal size.<em><br>Example: She added two ice cubes to her drink.</em></span></span> of coloured glass, marble or gold and <span class="tooltip">massive<span class="tooltiptext"><strong>Massive (adj.):</strong> very large in size, amount, or number.<em><br>Example: The castle had massive stone walls.</em></span></span> marble pillars. Of all its fascinating features, perhaps the most remarkable is its huge, shallow dome, supported on <span class="tooltip">piers<span class="tooltiptext"><strong>Piers (n.):</strong> strong, thick columns that support a bridge or roof.<em><br>Example: The bridge was supported by several concrete piers.</em></span></span> made of <span class="tooltip">limestone<span class="tooltiptext"><strong>Limestone (n.):</strong> a type of white rock used in building.<em><br>Example: Many old buildings are made of limestone.</em></span></span>. There are also smaller half-domes around the largest, supported by <span class="tooltip">arches<span class="tooltiptext"><strong>Arches (n.):</strong> curved structures that support weight from above.<em><br>Example: The old bridge has three beautiful stone arches.</em></span></span> - a typical feature of <span class="tooltip">Byzantine<span class="tooltiptext"><strong>Byzantine (adj.):):</strong> relating to the ancient empire of Byzantium.<em><br>Example: The museum has a collection of Byzantine art.</em></span></span> design for big buildings. Agia Sophia is well over 45m high and over 60m long and wide. Today we are <span class="tooltip">accustomed to<span class="tooltiptext"><strong>Accustomed to (phr.):</strong> to be familiar with something.<em><br>Example: I'm not accustomed to such cold weather.</em></span></span> seeing buildings as large as this, but in Justinian's time, it must have been truly <span class="tooltip">awe-inspiring<span class="tooltiptext"><strong>Awe-inspiring (adj.):</strong> causing you to feel great respect or admiration.<em><br>Example: The Grand Canyon is an awe-inspiring sight.</em></span></span>.</p>
+                    </div>
+                </div>
+        
+                <hr>
+        
+                <h2>The Leaning Tower of Pisa</h2>
+                <div class="building-section">
+                    <img src="b.png" alt="The Leaning Tower of Pisa.">
+                    <div class="building-text">
+                        <p>The famous Leaning Tower of Pisa is the bell tower of the <span class="tooltip">cathedral<span class="tooltiptext"><strong>Cathedral (n.):</strong> the main church of an area, led by a bishop.<em><br>Example: The city's cathedral is a major tourist attraction.</em></span></span> in the city of Pisa, in Italy. Its height is 55.8m, it has 8 <span class="tooltip">storeys<span class="tooltiptext"><strong>Storeys (n.):</strong> the floors or levels of a building.<em><br>Example: My office is on the third storey.</em></span></span> and there are 294 steps to the top. <span class="tooltip">Construction<span class="tooltiptext"><strong>Construction (n.):</strong> the process of building things like houses, roads, etc.<em><br>Example: The construction of the new road will take two years.</em></span></span> began in 1173 and it took 200 years to complete. The architect's identity is still unknown, but we know he designed the tower to be <span class="tooltip">vertical<span class="tooltiptext"><strong>Vertical (adj.):</strong> standing or pointing straight up.<em><br>Example: The cliff face is almost vertical.</em></span></span>.</p>
+                        <p>After the third floor was built, the tower started to <span class="tooltip">lean<span class="tooltiptext"><strong>Lean (v.):</strong> to be at an angle and not straight.<em><br>Example: The old tree leans to one side.</em></span></span> because its foundation was <span class="tooltip">shallow<span class="tooltiptext"><strong>Shallow (adj.):</strong> not deep.<em><br>Example: The kids were playing in the shallow end of the pool.</em></span></span> and in weak soil. The Pisans stopped construction twice for almost 100 years each time. In 1372, the tower was completed and seven bells were installed. Over the years, there have been many attempts to <span class="tooltip">straighten<span class="tooltiptext"><strong>Straighten (v.):</strong> to make something straight.<em><br>Example: He tried to straighten the bent key.</em></span></span> it or <span class="tooltip">halt<span class="tooltiptext"><strong>Halt (v.):</strong> to stop moving or happening.<em><br>Example: The police officer halted the traffic.</em></span></span> the leaning. Some attempts had the opposite result and the tower <span class="tooltip">sank<span class="tooltiptext"><strong>Sank (v.):</strong> past tense of 'sink'; to go down below the surface of something.<em><br>Example: The ship sank after hitting an iceberg.</em></span></span> further into the soil. The latest attempt was completed in 2001, and the tower has been <span class="tooltip">declared<span class="tooltiptext"><strong>Declared (v.):</strong> announced something publicly or officially.<em><br>Example: The government declared a state of emergency.</em></span></span> <span class="tooltip">stable<span class="tooltiptext"><strong>Stable (adj.):</strong> not likely to move, fall, or change.<em><br>Example: After the repairs, the building is now stable.</em></span></span> for at least another 300 years.</p>
+                    </div>
+                </div>
+                
+                <hr>
+        
+                <h2>The Sydney Opera House</h2>
+                <div class="building-section">
+                    <img src="c.png" alt="The Sydney Opera House with its iconic sail-like roofs.">
+                    <div class="building-text">
+                        <p>The Sydney Opera House is located in Sydney, Australia, and is one of the most <span class="tooltip">distinctive<span class="tooltiptext"><strong>Distinctive (adj.):</strong> easy to recognize because it is different from other things.<em><br>Example: The bird has a distinctive red mark on its head.</em></span></span> and famous 20th century buildings. It is also one of the world's most famous performing arts <span class="tooltip">venues<span class="tooltiptext"><strong>Venues (n.):</strong> places where events like concerts or meetings happen.<em><br>Example: The stadium is a popular venue for concerts.</em></span></span> and has become a <span class="tooltip">symbol<span class="tooltiptext"><strong>Symbol (n.):</strong> a sign or object used to represent something else.<em><br>Example: The dove is a symbol of peace.</em></span></span> of Sydney.</p>
+                        <p>Designed by Danish architect Jørn Utzon, it reaches out into Sydney <span class="tooltip">Harbour<span class="tooltiptext"><strong>Harbour (n.):</strong> an area of water next to the coast where ships can stay in safety.<em><br>Example: We watched the boats in the harbour.</em></span></span> and its <span class="tooltip">spectacular<span class="tooltiptext"><strong>Spectacular (adj.):</strong> very exciting to look at; amazing.<em><br>Example: There was a spectacular fireworks display.</em></span></span> roof reminds us of a moving ship at full <span class="tooltip">sail<span class="tooltiptext"><strong>Sail (n.):</strong> a large piece of cloth on a boat that catches wind to make it move.<em><br>Example: The ship looked beautiful with its white sails.</em></span></span>. Construction began in 1959 and was completed in 1973. It is very large ($183\text{m} \times 120\text{m}$) and is supported on 580 <span class="tooltip">concrete<span class="tooltiptext"><strong>Concrete (n.):</strong> a hard building material made by mixing sand, cement, and water.<em><br>Example: The sidewalk is made of concrete.</em></span></span> piers. The roofs are constructed of over a million white <span class="tooltip">granite<span class="tooltiptext"><strong>Granite (n.):</strong> a very hard rock, used for building.<em><br>Example: The kitchen counter is made of polished granite.</em></span></span> <span class="tooltip">tiles<span class="tooltiptext"><strong>Tiles (n.):</strong> flat, thin pieces of baked clay, plastic, etc. used for covering roofs or floors.<em><br>Example: The bathroom walls are covered in white tiles.</em></span></span> and the <span class="tooltip">interior<span class="tooltiptext"><strong>Interior (n.):</strong> the inside part of something.<em><br>Example: The interior of the house was beautifully decorated.</em></span></span> is <span class="tooltip">composed of<span class="tooltiptext"><strong>Composed of (phr.):</strong> to be formed from various things.<em><br>Example: The team is composed of players from all over the country.</em></span></span> pink granite and wood. It has about 1,000 rooms, 5 theatres, and a <span class="tooltip">multitude<span class="tooltiptext"><strong>Multitude (n.):</strong> a very large number of people or things.<em><br>Example: A multitude of birds flew overhead.</em></span></span> of restaurants and shops. You've probably seen this <span class="tooltip">breathtaking<span class="tooltiptext"><strong>Breathtaking (adj.):</strong> extremely exciting, beautiful, or surprising.<em><br>Example: The view from the top was breathtaking.</em></span></span> structure <span class="tooltip">featured<span class="tooltiptext"><strong>Featured (v.):</strong> included as an important part of something.<em><br>Example: The actor was featured in several successful films.</em></span></span> in films such as "Mission Impossible II" and "Finding Nemo".</p>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="container">
+                <h2>Building Facts</h2>
+                <p>Click on a question to reveal the answers.</p>
+                <table aria-label="Table of facts about famous buildings">
+                    <thead>
+                      <tr>
+                        <th scope="col">Question</th>
+                        <th scope="col">Agia Sophia</th>
+                        <th scope="col">The Tower of Pisa</th>
+                        <th scope="col">The Sydney Opera House</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row" class="clickable-question" data-row="where">a) Where is it?</th>
+                        <td data-row="where"><span class="answer">Istanbul, Turkey</span></td>
+                        <td data-row="where"><span class="answer">Pisa, Italy</span></td>
+                        <td data-row="where"><span class="answer">Sydney, Australia</span></td>
+                      </tr>
+                      <tr>
+                        <th scope="row" class="clickable-question" data-row="age">b) How old is it?</th>
+                        <td data-row="age"><span class="answer">Built after AD 532.</span></td>
+                        <td data-row="age"><span class="answer">Construction began in 1173.</span></td>
+                        <td data-row="age"><span class="answer">Completed in 1973.</span></td>
+                      </tr>
+                      <tr>
+                        <th scope="row" class="clickable-question" data-row="designer">c) Who designed it?</th>
+                        <td data-row="designer"><span class="answer">Anthemios and Isidoros</span></td>
+                        <td data-row="designer"><span class="answer">The architect is unknown.</span></td>
+                        <td data-row="designer"><span class="answer">Jørn Utzon</span></td>
+                      </tr>
+                      <tr>
+                        <th scope="row" class="clickable-question" data-row="feature">d) What is its most striking feature?</th>
+                        <td data-row="feature"><span class="answer">Its huge, shallow dome.</span></td>
+                        <td data-row="feature"><span class="answer">The fact that it leans.</span></td>
+                        <td data-row="feature"><span class="answer">The roof, which looks like sails.</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // This script is scoped to the #structures tab content
+                    const structuresTab = document.getElementById('structures');
+                    if (structuresTab) {
+                        const questions = structuresTab.querySelectorAll('.clickable-question');
+        
+                        questions.forEach(question => {
+                            question.addEventListener('click', function() {
+                                const rowId = this.getAttribute('data-row');
+                                const answersInRow = structuresTab.querySelectorAll(`td[data-row="${rowId}"] .answer`);
+        
+                                answersInRow.forEach(answer => {
+                                    if (answer.style.display === 'block') {
+                                        answer.style.display = 'none';
+                                    } else {
+                                        answer.style.display = 'block';
+                                    }
+                                });
+                            });
+                        });
+                    }
+                });
+            </script>
+        
+            <footer>
+                ✨✍️ Created by Panagiotis Domvros, English and Drama Teacher, All Rights Reserved ✍️✨
+            </footer>
+        </div>
+
+        <div id="practice" class="tab-content">
+            <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-6 sm:p-8 space-y-12">
+                <header class="text-center border-b pb-6">
+                    <h1 class="text-3xl sm:text-4xl font-bold text-blue-600">Interactive English Exercises</h1>
+                    <div class="mt-4 bg-blue-50 border-l-4 border-blue-500 text-blue-700 p-4 rounded-r-lg text-left" role="alert">
+                        <p class="font-bold">How to complete the exercises:</p>
+                        <p class="text-sm sm:text-base">This is a tap-to-place activity (not drag-and-drop).<br>
+                        1. Tap a word or image from its box to select it.<br>
+                        2. Tap an empty answer space to place the selected item.<br>
+                        3. To move an item you've already placed, just tap it to send it back to the box.</p>
+                    </div>
+                </header>
+        
+                <section id="ex-l2-2-2">
+                    <h2 class="text-2xl font-semibold mb-4 text-blue-700">Exercise 1: Time for games!</h2>
+                    <p class="mb-4 text-gray-600">Complete the text with the verbs from the box in the appropriate form.</p>
+                    <div id="l2-2-2-bank" class="word-bank mb-6"></div>
+                    <div class="space-y-4 text-lg leading-loose">
+                         <p>
+                            Everyone (1) <span class="drop-target" data-answer="enjoys"></span> playing games especially children! 
+                            (2) <span class="drop-target" data-answer="do you prefer"></span> outdoor games, indoor games or board games? 
+                            (3) <span class="drop-target" data-answer="does your little brother usually play"></span> hopscotch or marbles in the playground?
+                        </p>
+                        <p>
+                            Look at this young boy... He (4) <span class="drop-target" data-answer="is playing,plays"></span> hopscotch. He (5) <span class="drop-target" data-answer="hops"></span> from one end of the grid to the other.
+                        </p>
+                        <p>
+                            Look at these children. They (6) <span class="drop-target" data-answer="are shooting,shoot"></span> their marbles... If they hit the other marbles, they (7) <span class="drop-target" data-answer="win"></span> them.
+                        </p>
+                        <p>
+                            Puzzles, jigsaws and crosswords... They (8) <span class="drop-target" data-answer="do not need"></span> strength but a lively mind. Tangrams... They (9) <span class="drop-target" data-answer="consist"></span> of a square cut into seven pieces.
+                        </p>
+                        <p>
+                            People of all ages (10) <span class="drop-target" data-answer="enjoy"></span> playing chess. Most people (11) <span class="drop-target" data-answer="believe"></span> it is a difficult game... Nowadays, more and more people (12) <span class="drop-target" data-answer="are showing"></span> an interest in computer games.
+                        </p>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <button onclick="checkTapExercise('ex-l2-2-2')" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700">Check Answers</button>
+                        <button onclick="resetTapExercise('ex-l2-2-2')" class="ml-4 px-6 py-3 bg-gray-500 text-white font-semibold rounded-lg shadow-md hover:bg-gray-600">Reset</button>
+                    </div>
+                </section>
+        
+                <section id="ex-l3-1-1">
+                    <h2 class="text-2xl font-semibold mb-4 text-blue-700">Exercise 2: Building Vocabulary</h2>
+                    <div class="space-y-8">
+                        <div id="ex-l3-1-1-a">
+                            <h3 class="font-bold text-lg mb-2">A.</h3>
+                            <div id="l3-1-1-a-bank" class="word-bank mb-4"></div>
+                            <p class="text-lg leading-loose">
+                                (1) <span class="drop-target" data-answer="pillars"></span> are used to (2) <span class="drop-target" data-answer="support"></span> the roof or the (3) <span class="drop-target" data-answer="dome"></span> of a building. They are often made of (4) <span class="drop-target" data-answer="marble"></span> or stone and they give ancient Greek and Roman buildings their (5) <span class="drop-target" data-answer="distinctive"></span> look.
+                            </p>
+                        </div>
+                         <div id="ex-l3-1-1-b">
+                            <h3 class="font-bold text-lg mb-2">B.</h3>
+                            <div id="l3-1-1-b-bank" class="word-bank mb-4"></div>
+                            <p class="text-lg leading-loose">
+                                The (1) <span class="drop-target" data-answer="construction"></span> of the Colosseum was completed... it is one of Rome's most amazing (2) <span class="drop-target" data-answer="monuments"></span>. It had four (3) <span class="drop-target" data-answer="storeys"></span>... we can see the (4) <span class="drop-target" data-answer="foundation"></span> and the underground passages where cages had been (5) <span class="drop-target" data-answer="installed"></span> to keep the animals...
+                            </p>
+                        </div>
+                         <div id="ex-l3-1-1-c">
+                            <h3 class="font-bold text-lg mb-2">C.</h3>
+                            <div id="l3-1-1-c-bank" class="word-bank mb-4"></div>
+                            <p class="text-lg leading-loose">
+                                Another (1) <span class="drop-target" data-answer="awe-inspiring"></span> structure is Stonehenge... constructed of many heavy stone (2) <span class="drop-target" data-answer="columns"></span>. Although some stones... (3) <span class="drop-target" data-answer="lean"></span> against each other, the monument is very (4) <span class="drop-target" data-answer="stable"></span>. Scientists have made many (5) <span class="drop-target" data-answer="attempts"></span> to understand how the stone pillars came to be vertical.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-center">
+                         <button onclick="checkTapExercise('ex-l3-1-1-a'); checkTapExercise('ex-l3-1-1-b'); checkTapExercise('ex-l3-1-1-c');" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700">Check Answers</button>
+                         <button onclick="resetTapExercise('ex-l3-1-1-a'); resetTapExercise('ex-l3-1-1-b'); resetTapExercise('ex-l3-1-1-c');" class="ml-4 px-6 py-3 bg-gray-500 text-white font-semibold rounded-lg shadow-md hover:bg-gray-600">Reset</button>
+                    </div>
+                </section>
+        
+                <section id="ex-l3-1-2">
+                    <h2 class="text-2xl font-semibold mb-4 text-blue-700">Exercise 3: Types of Accommodation</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-4 text-lg">
+                            <div class="flex items-center gap-3"><span>1. ...a row of houses joined together.</span><span class="drop-target" data-answer="terraced houses"></span></div>
+                            <div class="flex items-center gap-3"><span>2. ...a large building with apartments.</span><span class="drop-target" data-answer="a block of flats"></span></div>
+                            <div class="flex items-center gap-3"><span>3. ...a large strong building with towers.</span><span class="drop-target" data-answer="a castle"></span></div>
+                            <div class="flex items-center gap-3"><span>4. ...a wooden house on a mountain.</span><span class="drop-target" data-answer="a chalet"></span></div>
+                            <div class="flex items-center gap-3"><span>5. ...a small simple house.</span><span class="drop-target" data-answer="a hut"></span></div>
+                            <div class="flex items-center gap-3"><span>6. ...a very tall building.</span><span class="drop-target" data-answer="a skyscraper"></span></div>
+                            <div class="flex items-center gap-3"><span>7. ...a house joined to one other house.</span><span class="drop-target" data-answer="a semi-detached house"></span></div>
+                            <div class="flex items-center gap-3"><span>8. ...a house in the countryside.</span><span class="drop-target" data-answer="a cottage"></span></div>
+                            <div class="flex items-center gap-3"><span>9. ...a structure of poles and cloth.</span><span class="drop-target" data-answer="a tent"></span></div>
+                            <div class="flex items-center gap-3"><span>10. ...a house made of ice blocks.</span><span class="drop-target" data-answer="an igloo"></span></div>
+                            <div class="flex items-center gap-3"><span>11. ...a house not joined to another.</span><span class="drop-target" data-answer="a detached house"></span></div>
+                        </div>
+                        <div id="l3-1-2-bank" class="image-bank"></div>
+                    </div>
+                     <div class="mt-6 text-center">
+                        <button onclick="checkTapExercise('ex-l3-1-2')" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700">Check Answers</button>
+                        <button onclick="resetTapExercise('ex-l3-1-2')" class="ml-4 px-6 py-3 bg-gray-500 text-white font-semibold rounded-lg shadow-md hover:bg-gray-600">Reset</button>
+                    </div>
+                </section>
+        
+                <section class="space-y-12">
+                    
+                    <div id="ex-p20-2-1">
+                        <h2 class="text-2xl font-semibold mb-4 text-blue-700">Exercise 4: Complete with adjectives</h2>
+                         <div id="p20-2-1-bank" class="word-bank mb-6"></div>
+                         <div class="space-y-3 text-lg leading-loose">
+                            <p>1. Mexico City is <span class="drop-target" data-answer="bigger"></span> (big) and <span class="drop-target" data-answer="noisier"></span> (noisy) than Los Angeles.</p>
+                            <p>2. The traffic in Bangkok is even <span class="drop-target" data-answer="worse"></span> (bad) than that of Athens!</p>
+                            <p>3. The 'bullet train' in Japan is <span class="drop-target" data-answer="the fastest"></span> (fast) train in the world.</p>
+                            <p>4. In some countries, Chinese food is much <span class="drop-target" data-answer="more popular"></span> (popular) than Mexican food.</p>
+                            <p>5. The Maracana stadium... can seat <span class="drop-target" data-answer="more"></span> (many) spectators...</p>
+                            <p>6. Oxford is not <span class="drop-target" data-answer="as old"></span> (old) as London and Cambridge.</p>
+                            <p>7. You can get the <span class="drop-target" data-answer="the best"></span> (good) view of Paris from the Eiffel Tower.</p>
+                            <p>8. The world's <span class="drop-target" data-answer="the highest"></span> (high) restaurant is in the CN Tower...</p>
+                            <p>9. St. Basil's cathedral... is one of <span class="drop-target" data-answer="the most colourful"></span> (colourful) buildings in the world.</p>
+                            <p>10. Sometimes it costs <span class="drop-target" data-answer="more"></span> (much) money to restore a damaged building...</p>
+                         </div>
+                         <div class="mt-6 text-center">
+                            <button onclick="checkTapExercise('ex-p20-2-1')" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700">Check Answers</button>
+                            <button onclick="resetTapExercise('ex-p20-2-1')" class="ml-4 px-6 py-3 bg-gray-500 text-white font-semibold rounded-lg shadow-md hover:bg-gray-600">Reset</button>
+                        </div>
+                    </div>
+        
+                    <div>
+                         <h2 class="text-2xl font-semibold mb-4 text-blue-700">Exercise 5: Cross out the extra word</h2>
+                         <p class="mb-2 text-gray-600">Click on the extra word in each sentence to cross it out.</p>
+                         <div id="cross-out-container" class="space-y-3 text-lg">
+                            <p data-answer="more">1. China is a <span class="p-1">more</span> <span class="p-1">larger</span> <span class="p-1">country</span> <span class="p-1">than</span> <span class="p-1">India.</span></p>
+                            <p data-answer="than">2. English <span class="p-1">food</span> <span class="p-1">is</span> <span class="p-1">not</span> <span class="p-1">as</span> <span class="p-1">popular</span> <span class="p-1">as</span> <span class="p-1">than</span> <span class="p-1">Japanese.</span></p>
+                            <p data-answer="the">3. Spanish <span class="p-1">people</span> <span class="p-1">are</span> <span class="p-1">the</span> <span class="p-1">more</span> <span class="p-1">interested</span> <span class="p-1">in</span> <span class="p-1">football</span> <span class="p-1">than</span> <span class="p-1">French</span> <span class="p-1">people.</span></p>
+                            <p data-answer="than">4. This <span class="p-1">country</span> <span class="p-1">is</span> <span class="p-1">the</span> <span class="p-1">most</span> <span class="p-1">hospitable</span> <span class="p-1">than</span> <span class="p-1">in</span> <span class="p-1">Europe.</span></p>
+                            <p data-answer="as">5. This <span class="p-1">building</span> <span class="p-1">is</span> <span class="p-1">as</span> <span class="p-1">less</span> <span class="p-1">impressive</span> <span class="p-1">than</span> <span class="p-1">the</span> <span class="p-1">Colosseum.</span></p>
+                            <p data-answer="much">6. The <span class="p-1">Japanese</span> <span class="p-1">are</span> <span class="p-1">much</span> <span class="p-1">polite</span> <span class="p-1">people.</span></p>
+                            <p data-answer="much">7. The <span class="p-1">Parthenon</span> <span class="p-1">is</span> <span class="p-1">not</span> <span class="p-1">as</span> <span class="p-1">much</span> <span class="p-1">high</span> <span class="p-1">as</span> <span class="p-1">the</span> <span class="p-1">Pyramids.</span></p>
+                         </div>
+                         <div class="mt-6 text-center"><button onclick="checkP20Ex2_2()" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700">Check Answers</button></div>
+                    </div>
+        
+                    <div id="ex-p20-2-3">
+                         <h2 class="text-2xl font-semibold mb-4 text-blue-700">Exercise 6: Complete with adjectives</h2>
+                         <div id="p20-2-3-bank" class="word-bank mb-6"></div>
+                         <div class="space-y-3 text-lg leading-loose">
+                             <p>1. The Great Sphinx is <span class="drop-target" data-answer="the oldest"></span> (old) and <span class="drop-target" data-answer="the largest"></span> (large) statue in the world.</p>
+                             <p>2. The world's <span class="drop-target" data-answer="the most famous"></span> (famous) statue of Jesus is in Rio de Janeiro...</p>
+                             <p>3. The Colossi of Memnon are not <span class="drop-target" data-answer="as tall"></span> (tall) as the Bamian Buddah.</p>
+                             <p>4. Although 'Motherland Calls' is <span class="drop-target" data-answer="the tallest"></span> (tall) statue in the world today, it is not <span class="drop-target" data-answer="as famous"></span> (famous) as others.</p>
+                         </div>
+                         <div class="mt-6 text-center">
+                            <button onclick="checkTapExercise('ex-p20-2-3')" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700">Check Answers</button>
+                            <button onclick="resetTapExercise('ex-p20-2-3')" class="ml-4 px-6 py-3 bg-gray-500 text-white font-semibold rounded-lg shadow-md hover:bg-gray-600">Reset</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
     </div>
     
     <div id="modal-backdrop" class="modal-backdrop"></div>
@@ -614,6 +1113,144 @@
     </footer>
 
     <script>
+        let selectedItem = null;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function createTappableItem(text) {
+            const item = document.createElement('div');
+            item.className = 'tappable-item';
+            item.textContent = text;
+            item.addEventListener('click', handleItemTap);
+            return item;
+        }
+        
+        function createImageCard(itemData) {
+            const card = document.createElement('div');
+            card.className = 'tappable-item image-card';
+
+            const img = document.createElement('img');
+            img.src = itemData.image;
+            img.alt = itemData.name;
+            
+            const span = document.createElement('span');
+            span.textContent = itemData.name;
+            
+            card.appendChild(img);
+            card.appendChild(span);
+            card.addEventListener('click', handleItemTap);
+            return card;
+        }
+
+
+        function initializeTapExercise(containerId, words) {
+            const container = document.getElementById(containerId);
+            const bank = container.querySelector('.word-bank, .image-bank');
+            shuffleArray(words).forEach(word => {
+                const isImageData = typeof word === 'object' && word.name;
+                const item = isImageData ? createImageCard(word) : createTappableItem(word);
+                item.dataset.bankId = bank.id;
+                bank.appendChild(item);
+            });
+
+            container.querySelectorAll('.drop-target').forEach(target => {
+                target.addEventListener('click', handleDropTargetTap);
+            });
+        }
+
+        function handleItemTap(event) {
+            const tappedItem = event.currentTarget;
+            
+            if (tappedItem.parentElement.classList.contains('drop-target')) {
+                const bank = document.getElementById(tappedItem.dataset.bankId);
+                bank.appendChild(tappedItem);
+                tappedItem.parentElement.classList.remove('correct', 'incorrect');
+                return;
+            }
+
+            if (selectedItem) {
+                selectedItem.classList.remove('selected');
+            }
+            
+            if (selectedItem === tappedItem) {
+                selectedItem = null;
+            } else {
+                selectedItem = tappedItem;
+                selectedItem.classList.add('selected');
+            }
+        }
+
+        function handleDropTargetTap(event) {
+            const dropTarget = event.currentTarget;
+            if (selectedItem && dropTarget.children.length === 0) {
+                dropTarget.appendChild(selectedItem);
+                selectedItem.classList.remove('selected');
+                selectedItem = null;
+                dropTarget.classList.remove('correct', 'incorrect');
+            }
+        }
+        
+        function checkTapExercise(containerId) {
+            const container = document.getElementById(containerId);
+            container.querySelectorAll('.drop-target').forEach(target => {
+                target.classList.remove('correct', 'incorrect');
+                const child = target.querySelector('.tappable-item');
+                if (child) {
+                    const userAns = child.textContent.trim().toLowerCase();
+                    const correctAns = target.dataset.answer.toLowerCase().split(',');
+                    if (correctAns.includes(userAns)) {
+                        target.classList.add('correct');
+                    } else {
+                        target.classList.add('incorrect');
+                    }
+                } else {
+                    target.classList.add('incorrect');
+                }
+            });
+        }
+
+        function resetTapExercise(containerId) {
+            const container = document.getElementById(containerId);
+            container.querySelectorAll('.tappable-item').forEach(item => {
+                const bank = document.getElementById(item.dataset.bankId);
+                bank.appendChild(item);
+            });
+            container.querySelectorAll('.drop-target').forEach(target => {
+                target.classList.remove('correct', 'incorrect');
+                // Clear any potential leftover content
+                while(target.firstChild) {
+                    target.removeChild(target.firstChild);
+                }
+            });
+        }
+
+        function checkP20Ex2_2() {
+            const crossOutContainer = document.getElementById('cross-out-container');
+            crossOutContainer.querySelectorAll('p').forEach(p => {
+                const selected = p.querySelector('.crossed-out');
+                let feedbackEl = p.nextElementSibling;
+                if (feedbackEl && feedbackEl.classList.contains('feedback')) feedbackEl.remove();
+                feedbackEl = document.createElement('div');
+                feedbackEl.className = 'feedback';
+                
+                if (selected && selected.textContent.trim().toLowerCase() === p.dataset.answer.toLowerCase()) {
+                    feedbackEl.textContent = 'Correct!';
+                    feedbackEl.classList.add('correct-feedback');
+                } else {
+                    feedbackEl.textContent = `Incorrect. The extra word is "${p.dataset.answer}".`;
+                    feedbackEl.classList.add('incorrect-feedback');
+                }
+                p.after(feedbackEl);
+            });
+        }
+
+
         document.addEventListener('DOMContentLoaded', () => {
 
             // --- TAB SWITCHING LOGIC ---
@@ -752,7 +1389,9 @@
                         cell.classList.add('hidden');
                     });
                 }
-                resetButton.addEventListener('click', resetAllWorkbook);
+                if (resetButton) {
+                    resetButton.addEventListener('click', resetAllWorkbook);
+                }
                 resetAllWorkbook(); // Initial setup
             })();
             
@@ -887,6 +1526,44 @@
                     });
                 }
             })();
+
+            // --- INITIALIZE PRACTICE TAB EXERCISES ---
+            initializeTapExercise('ex-l2-2-2', ['enjoys', 'do you prefer', 'does your little brother usually play', 'is playing', 'hops', 'are shooting', 'win', 'do not need', 'consist', 'enjoy', 'believe', 'are showing']);
+            
+            initializeTapExercise('ex-l3-1-1-a', ['support', 'pillars', 'dome', 'distinctive', 'soil', 'marble']);
+            initializeTapExercise('ex-l3-1-1-b', ['foundation', 'monuments', 'installed', 'construction', 'worked', 'storeys']);
+            initializeTapExercise('ex-l3-1-1-c', ['stable', 'attempts', 'lean', 'shallow', 'columns', 'awe-inspiring']);
+
+            const accommodationData = [
+                { name: 'a tent', image: 'tent.png' },
+                { name: 'a chalet', image: 'chalet.png' },
+                { name: 'a castle', image: 'castle.png' },
+                { name: 'a block of flats', image: 'block.png' },
+                { name: 'a cottage', image: 'cottage.png' },
+                { name: 'a hut', image: 'hut.png' },
+                { name: 'an igloo', image: 'igloo.png' },
+                { name: 'a skyscraper', image: 'skyscraper.png' },
+                { name: 'a semi-detached house', image: 'semidetached.png' },
+                { name: 'terraced houses', image: 'terraced.png'},
+                { name: 'a detached house', image: 'detached.png' }
+            ];
+            initializeTapExercise('ex-l3-1-2', accommodationData);
+
+            initializeTapExercise('ex-p20-2-1', ['bigger', 'noisier', 'worse', 'the fastest', 'more popular', 'more', 'as old', 'the best', 'the highest', 'the most colourful']);
+            
+            initializeTapExercise('ex-p20-2-3', ['the oldest', 'the largest', 'the most famous', 'as tall', 'the tallest', 'as famous']);
+
+            const crossOutContainer = document.getElementById('cross-out-container');
+            if (crossOutContainer) {
+                crossOutContainer.querySelectorAll('p > span').forEach(span => {
+                    span.classList.add('cursor-pointer', 'transition-colors', 'hover:bg-yellow-200', 'rounded');
+                    span.addEventListener('click', (e) => {
+                        const parent = e.target.parentElement;
+                        parent.querySelectorAll('span').forEach(s => s.classList.remove('crossed-out'));
+                        e.target.classList.add('crossed-out');
+                    });
+                });
+            }
         });
     </script>
 </body>
