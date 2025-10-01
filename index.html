@@ -57,6 +57,7 @@
             color: #6c757d;
             border-bottom: 3px solid transparent;
             transition: color 0.3s, border-bottom-color 0.3s;
+            text-decoration: none; /* For the new link tab */
         }
         .tab-button:hover {
             color: var(--purple);
@@ -89,6 +90,7 @@
         .modal-content li { background-color: #f8f9fa; border-left: 3px solid var(--teal); padding: 8px 12px; margin-bottom: 5px; border-radius: 0 4px 4px 0; }
         
         /* --- Styles from Workbook Page (indexworkbook.html) --- */
+        .button-container { margin-top: 30px; text-align: center; }
         button#reset-btn { background-color: #6c757d; padding: 12px 25px; font-size: 16px; font-weight: bold; cursor: pointer; border: none; border-radius: 8px; color: #fff; transition: background-color 0.2s, transform 0.2s; }
         button#reset-btn:hover { background-color: #5a6268; transform: translateY(-2px); }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
@@ -123,6 +125,56 @@
         .quiz-feedback.incorrect { color: var(--danger-color); }
         input[type="radio"]:disabled + label { color: #6c757d; }
 
+        /* --- Adjective Derivatives Game Styling --- */
+        .adjective-game-container {
+            overflow-x: auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .adjective-table {
+            width: 100%;
+            text-align: left;
+            border-collapse: collapse;
+        }
+        .adjective-table th, .adjective-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .adjective-table thead th {
+            background-color: #495057;
+            color: #ffffff;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 0.5px;
+        }
+        .adjective-table tbody tr:nth-of-type(even) {
+            background-color: var(--light-gray-bg);
+        }
+        .adjective-table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        .adjective-table .positive-adj {
+            color: var(--success-color);
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .adjective-table .negative-adj {
+            color: var(--danger-color);
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .adjective-table .hidden {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .adjective-table td:not(.hidden) {
+            opacity: 1;
+            visibility: visible;
+        }
+
         /* --- Footer Styling --- */
         footer { text-align: center; margin-top: 40px; padding: 20px; font-size: 0.9em; color: #6c757d; border-top: 1px solid var(--border-color); }
     </style>
@@ -135,7 +187,8 @@
         <nav class="tab-nav">
             <button class="tab-button active" data-tab="reading">Reading Text</button>
             <button class="tab-button" data-tab="exercises">Interactive Exercises</button>
-        </nav>
+            <a href="https://englished.github.io/descriptions-person-b12/" target="_blank" class="tab-button">Writing</a>
+            </nav>
 
         <div id="reading" class="tab-content active">
             <h2>THE WAY WE LOOK</h2>
@@ -259,6 +312,73 @@
                 <div class="category"><h3>Mouth</h3><div class="drop-zone" data-category-id="mouth"></div></div>
                 <div class="category"><h3>Eyes</h3><div class="drop-zone" data-category-id="eyes"></div></div>
             </div>
+
+            <hr>
+            <h2>Exercise 1.4: Adjective Derivatives</h2>
+            <p>Click a positive word to reveal its opposite. Then click the negative word to reveal the corresponding nouns.</p>
+             <div class="adjective-game-container">
+                <table class="adjective-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Positive Adjective</th>
+                            <th scope="col">Negative Adjective</th>
+                            <th scope="col">Corresponding Nouns</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="positive-adj">modest</td>
+                            <td class="negative-adj hidden">arrogant</td>
+                            <td class="noun-form hidden">modesty / arrogance</td>
+                        </tr>
+                        <tr>
+                            <td class="positive-adj">generous</td>
+                            <td class="negative-adj hidden">mean</td>
+                            <td class="noun-form hidden">generosity / meanness</td>
+                        </tr>
+                        <tr>
+                            <td class="positive-adj">polite</td>
+                            <td class="negative-adj hidden">rude</td>
+                            <td class="noun-form hidden">politeness / rudeness</td>
+                        </tr>
+                        <tr>
+                            <td class="positive-adj">honest</td>
+                            <td class="negative-adj hidden">dishonest</td>
+                            <td class="noun-form hidden">honesty / dishonesty</td>
+                        </tr>
+                        <tr>
+                            <td class="positive-adj">patient</td>
+                            <td class="negative-adj hidden">impatient</td>
+                            <td class="noun-form hidden">patience / impatience</td>
+                        </tr>
+                        <tr>
+                            <td class="positive-adj">hard-working</td>
+                            <td class="negative-adj hidden">lazy</td>
+                            <td class="noun-form hidden">hard work / laziness</td>
+                        </tr>
+                        <tr>
+                            <td class="positive-adj">cheerful</td>
+                            <td class="negative-adj hidden">miserable</td>
+                            <td class="noun-form hidden">cheerfulness / misery</td>
+                        </tr>
+                        <tr>
+                            <td class="positive-adj">calm</td>
+                            <td class="negative-adj hidden">nervous</td>
+                            <td class="noun-form hidden">calmness / nervousness</td>
+                        </tr>
+                        <tr>
+                            <td class="positive-adj">sociable</td>
+                            <td class="negative-adj hidden">shy</td>
+                            <td class="noun-form hidden">sociability / shyness</td>
+                        </tr>
+                         <tr style="border-bottom: none;">
+                            <td class="positive-adj">sensitive</td>
+                            <td class="negative-adj hidden">thoughtless</td>
+                            <td class="noun-form hidden">sensitivity / thoughtlessness</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <div class="button-container">
                 <button id="reset-btn">Reset All Exercises</button>
             </div>
@@ -278,7 +398,7 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             // --- TAB SWITCHING LOGIC ---
-            const tabs = document.querySelectorAll('.tab-button');
+            const tabs = document.querySelectorAll('.tab-button[data-tab]'); // Select only buttons with data-tab
             const tabContents = document.querySelectorAll('.tab-content');
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
@@ -400,15 +520,49 @@
                 const resetButton = document.getElementById('reset-btn'); const sourceContainer1 = document.getElementById('source-words-1'); const sourceContainer2 = document.getElementById('source-words-2');
                 function createDraggable(word, type) { const div = document.createElement('div'); div.className = 'draggable'; div.draggable = true; div.id = word.id; div.textContent = word.text; if (type === 'match') div.dataset.match = word.match; else if (type === 'category') div.dataset.category = word.category; return div; }
                 function resetAllWorkbook() {
+                    // Reset drag-and-drop and dropdowns
                     sourceContainer1.innerHTML = ''; sourceContainer2.innerHTML = '';
                     document.querySelectorAll('#exercises .drop-zone').forEach(zone => { zone.innerHTML = ''; zone.classList.remove('correct', 'incorrect'); delete zone.dataset.locked; });
                     document.querySelectorAll('#exercises .dropdown-q').forEach(select => { select.value = ""; select.disabled = false; select.className = 'dropdown-q'; select.nextElementSibling.textContent = ''; });
                     words1.forEach(word => sourceContainer1.appendChild(createDraggable(word, 'match')));
                     words2.forEach(word => sourceContainer2.appendChild(createDraggable(word, 'category')));
                     initializeDragAndDrop();
+
+                    // Reset Adjective Game
+                     document.querySelectorAll('.adjective-table .negative-adj, .adjective-table .noun-form').forEach(cell => {
+                        cell.classList.add('hidden');
+                    });
                 }
                 resetButton.addEventListener('click', resetAllWorkbook);
-                resetAllWorkbook();
+                resetAllWorkbook(); // Initial setup
+            })();
+            
+            // --- ADJECTIVE DERIVATIVES GAME LOGIC ---
+            (function() {
+                const positiveAdjectiveCells = document.querySelectorAll('.positive-adj');
+                const negativeAdjectiveCells = document.querySelectorAll('.negative-adj');
+
+                positiveAdjectiveCells.forEach(cell => {
+                    cell.addEventListener('click', () => {
+                        const parentRow = cell.closest('tr');
+                        const negativeAdjCell = parentRow.querySelector('.negative-adj');
+                        if (negativeAdjCell) {
+                            negativeAdjCell.classList.remove('hidden');
+                        }
+                    });
+                });
+
+                negativeAdjectiveCells.forEach(cell => {
+                    cell.addEventListener('click', () => {
+                        if (!cell.classList.contains('hidden')) {
+                            const parentRow = cell.closest('tr');
+                            const nounCell = parentRow.querySelector('.noun-form');
+                            if (nounCell) {
+                                nounCell.classList.remove('hidden');
+                            }
+                        }
+                    });
+                });
             })();
         });
     </script>
